@@ -1,8 +1,14 @@
 import React from 'react';
 
-const Input = ({inputHandler}) => {
+const Input = ({inputHandler, inputValue, placeholder}) => {
+
     return (
-        <input onChange={(e) => inputHandler(e.target.value)} className='input'/>
+        <input
+            value={inputValue}
+            onChange={(e) => inputHandler(e.target.value)}
+            className='input'
+            placeholder={placeholder}
+        />
     );
 };
 

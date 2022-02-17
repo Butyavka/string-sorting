@@ -1,25 +1,28 @@
 import React, {useState} from 'react';
 import './App.css'
-import Board from "./components/Board";
+import Box from "./components/Box";
 import Input from "./components/Input";
+import Board from "./components/Board";
 
 const App = () => {
-    const [inputValue, setInputValue] = useState();
+
+    const [inputValue, setInputValue] = useState('');
     const [stringItems, setStringItems] = useState([]);
     const [numberItems, setNumberItems] = useState([]);
     const [mixedItems, setMixedItems] = useState([]);
 
     const addItem = (e) => {
         e.preventDefault();
-        if (!Number(inputValue) && inputValue !== '' && inputValue != 0) {
+        if (!Number(inputValue) && inputValue !== '' && Number(inputValue) !== 0) {
             if (/[0-9]/.test(inputValue)) {
                 if (!mixedItems.some(e => e.value === inputValue) && inputValue !== '') {
                     setMixedItems([...mixedItems, {value: inputValue, date: mixedItems.length}]);
+                    setInputValue('')
                 }
                 return
             }
             let countItem = 0;
-            let arr = []
+            let arr = [];
             arr = stringItems;
             for (let i = 0; i < arr.length; i++ ){
                 if (arr[i].value === inputValue) {
@@ -32,130 +35,47 @@ const App = () => {
             setStringItems([...arr]);
         } else {
             if (!numberItems.some(e => e.value === inputValue) && inputValue !== '') {
-                setNumberItems([...numberItems, {value: inputValue, date: numberItems.length}]);
+                setNumberItems([...numberItems, {value: Number(inputValue), date: numberItems.length}]);
             }
         }
+        setInputValue('')
     };
-
-    const stringSort = (a, b) => {
-        if (a > b) {
-            return 1;
-        }
-        if (a < b) {
-            return -1;
-        }
-        return 0;
-    }
-
-    const selectHandler = (e, arr, setArr) => {
-        switch (e.target.value) {
-            case 'string': {
-                let newArr = arr.sort((a, b) => stringSort(a.value, b.value))
-                setArr([...newArr]);
-                break;
-            }
-            case 'number': {
-                let newArr = arr.sort((a, b) => {return a.value - b.value})
-                setArr([...newArr]);
-                break;
-            }
-            case 'count': {
-                let newArr = arr.sort((a, b) => {return a.count - b.count})
-                setArr([...newArr]);
-                break;
-            }
-            case 'date': {
-                let newArr = arr.sort((a, b) => {return a.date - b.date})
-                setArr([...newArr]);
-                break;
-            }
-            default: break;
-        }
-    }
 
     return (
         <>
-            <div className='box'>
-                <Board color='white'>
+            <div className='container'>
+                <Box color='white'>
                     <form onSubmit={addItem}>
-                        <Input inputHandler={setInputValue}/>
+                        <Input inputHandler={setInputValue} inputValue={inputValue} placeholder={'Введите запись...'}/>
                     </form>
-                </Board>
-                <Board color='peach'>
-                    {stringItems.length > 0 ? (
-                        <>
-                            <select
-                                defaultValue='date'
-                                className='select'
-                                onChange={(e) => {
-                                    selectHandler(e, stringItems, setStringItems)
-                                }}>
-                                <option name='date' value="date">По добавлению</option>
-                                <option name='string' value="string">По алфавиту</option>
-                                <option name='count' value="count">По количеству</option>
-                            </select>
-                            <ul className='list'>
-                                {stringItems.map((item, index) => (
-                                    <li className='item' key={item.value}>{item.value} <span>x{item.count}</span></li>
-                                ))}
-                            </ul>
-                        </>
-                    )
-                    :
-                    (
-                    <p>Данные отсутствуют</p>
-                    )}
-                </Board>
+                </Box>
+                <Board
+                    items={stringItems}
+                    options={[
+                        {name: 'date', value: "date", text: 'По добавлению'},
+                        {name: 'string', value: "string", text: 'По алфавиту'},
+                        {name: 'count', value: "count", text: 'По количеству'},
+                    ]}
+                    color='peach'
+                />
             </div>
-            <div className='box'>
-                <Board color='purple'>
-                    {numberItems.length > 0 ? (
-                        <>
-                            <select
-                                defaultValue='date'
-                                className='select'
-                                onChange={(e) => {
-                                    selectHandler(e, numberItems, setNumberItems)
-                                }}>
-                                <option name='date' value="date">По добавлению</option>
-                                <option name='number' value="number">По значению</option>
-                            </select>
-                            <ul className='list'>
-                                {numberItems.map((item, index) => (
-                                    <li className='item' key={item.value}>{item.value}</li>
-                                ))}
-                            </ul>
-                        </>
-                    )
-                    :
-                    (
-                    <p>Данные отсутствуют</p>
-                    )}
-                </Board>
-                <Board color='black'>
-                    {mixedItems.length > 0 ? (
-                        <>
-                            <select
-                                defaultValue='date'
-                                className='select'
-                                onChange={(e) => {
-                                    selectHandler(e, mixedItems, setMixedItems)
-                                }}>
-                                <option name='date' value="date">По добавлению</option>
-                                <option name='string' value="string">По алфавиту</option>
-                            </select>
-                            <ul className='list'>
-                                {mixedItems.map((item, index) => (
-                                    <li className='item' key={item.value}>{item.value}</li>
-                                ))}
-                            </ul>
-                        </>
-                    )
-                    :
-                    (
-                    <p>Данные отсутствуют</p>
-                    )}
-                </Board>
+            <div className='container'>
+                <Board
+                    items={numberItems}
+                    options={[
+                        {name: 'date', value: "date", text: 'По добавлению'},
+                        {name: 'number', value: "number", text: 'По значению'},
+                    ]}
+                    color='purple'
+                />
+                <Board
+                    items={mixedItems}
+                    options={[
+                        {name: 'date', value: "date", text: 'По добавлению'},
+                        {name: 'string', value: "string", text: 'По алфавиту'},
+                    ]}
+                    color='black'
+                />
             </div>
         </>
     );
