@@ -12,7 +12,7 @@ export const selectHandler = (sortType, arr) => {
     let sortedArr = [];
     switch (sortType) {
         case 'string': {
-            sortedArr = arr.sort((a, b) => stringSort(a.value, b.value))
+            sortedArr = arr.sort((a, b) => stringSort(a.value.toLowerCase(), b.value.toLowerCase()))
             return sortedArr;
         }
         case 'number': {
