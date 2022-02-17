@@ -13,7 +13,7 @@ const Board = ({items, options, color}) => {
         } else {
             setSortedItems(items);
         }
-    }, [items, select]);
+    }, [items]);
 
     return (
         <Box color={color}>
@@ -24,6 +24,7 @@ const Board = ({items, options, color}) => {
                         className='select'
                         onChange={(e) => {
                             setSelect(e.target.value);
+                            selectHandler(e.target.value, sortedItems);
                         }}>
                         {options.map(option => (
                             <option key={option.name} name={option.name} value={option.value}>{option.text}</option>

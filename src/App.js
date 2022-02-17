@@ -34,7 +34,7 @@ const App = () => {
             if (countItem === 0) {arr.push({value: inputValue, count: 1, date: arr.length})}
             setStringItems([...arr]);
         } else {
-            if (!numberItems.some(e => e.value === inputValue) && inputValue !== '') {
+            if (!numberItems.some(e => e.value === Number(inputValue)) && inputValue !== '') {
                 setNumberItems([...numberItems, {value: Number(inputValue), date: numberItems.length}]);
             }
         }
