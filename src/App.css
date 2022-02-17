@@ -1,0 +1,67 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: sans-serif;
+}
+p {
+    color: white;
+}
+.white {
+    background-color: white;
+}
+.peach {
+    background-color: #f29283;
+}
+.purple {
+    background-color: #7f25b7;
+}
+.black {
+    background-color: black;
+}
+
+.box {
+    width: 100%;
+    height: 50vh;
+    display: flex;
+}
+.board {
+    width: 50%;
+    height: 100%;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+.input {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px;
+    font-size: 18px;
+    border: 2px solid grey;
+    border-radius: 5px;
+}
+.select {
+    width: 100%;
+    max-width: 400px;
+    padding: 4px;
+    font-size: 16px;
+    border: 2px solid grey;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+.list {
+    list-style: none;
+    max-width: 400px;
+}
+.item {
+    display: flex;
+    justify-content: space-between;
+    color: white;
+}
+.item > span {
+    font-size: 20px;
+    color: #686363;
+}
